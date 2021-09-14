@@ -1,0 +1,120 @@
+<html>
+<head>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis.css" type="text/css" />
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/vis/4.16.1/vis-network.min.js"> </script>
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+
+<style type="text/css">
+
+        #mynetwork {
+            width: 500px;
+            height: 500px;
+            background-color: #ffffff;
+            border: 1px solid lightgray;
+            position: relative;
+            float: left;
+        }
+
+        
+
+        
+        #config {
+            float: left;
+            width: 400px;
+            height: 600px;
+        }
+        
+
+        
+</style>
+
+</head>
+
+<body>
+<div id = "mynetwork"></div>
+
+
+<div id = "config"></div>
+
+<script type="text/javascript">
+
+    // initialize global variables.
+    var edges;
+    var nodes;
+    var network; 
+    var container;
+    var options, data;
+
+    
+    // This method is responsible for drawing the graph, returns the drawn network
+    function drawGraph() {
+        var container = document.getElementById('mynetwork');
+        
+        
+
+        // parsing and collecting nodes and edges from the python
+        nodes = new vis.DataSet([{"id": "Sloane Square", "label": "Sloane Square", "shape": "dot", "size": 10}, {"id": "Victoria", "label": "Victoria", "shape": "dot", "size": 10}, {"id": "South Kensington", "label": "South Kensington", "shape": "dot", "size": 10}, {"id": "St James\u0027s Park", "label": "St James\u0027s Park", "shape": "dot", "size": 10}, {"id": "Green Park", "label": "Green Park", "shape": "dot", "size": 10}, {"id": "Pimlico", "label": "Pimlico", "shape": "dot", "size": 10}, {"id": "Westminster", "label": "Westminster", "shape": "dot", "size": 10}, {"id": "Embankment", "label": "Embankment", "shape": "dot", "size": 10}, {"id": "Waterloo", "label": "Waterloo", "shape": "dot", "size": 10}, {"id": "Temple", "label": "Temple", "shape": "dot", "size": 10}, {"id": "Charing Cross", "label": "Charing Cross", "shape": "dot", "size": 10}, {"id": "Blackfriars", "label": "Blackfriars", "shape": "dot", "size": 10}, {"id": "Gloucester Road", "label": "Gloucester Road", "shape": "dot", "size": 10}, {"id": "Earl\u0027s Court", "label": "Earl\u0027s Court", "shape": "dot", "size": 10}, {"id": "Knightsbridge", "label": "Knightsbridge", "shape": "dot", "size": 10}, {"id": "High Street Kensington", "label": "High Street Kensington", "shape": "dot", "size": 10}, {"id": "Notting Hill Gate", "label": "Notting Hill Gate", "shape": "dot", "size": 10}, {"id": "Bayswater", "label": "Bayswater", "shape": "dot", "size": 10}, {"id": "Queensway", "label": "Queensway", "shape": "dot", "size": 10}, {"id": "Edgware Road", "label": "Edgware Road", "shape": "dot", "size": 10}, {"id": "Marylebone", "label": "Marylebone", "shape": "dot", "size": 10}, {"id": "Paddington", "label": "Paddington", "shape": "dot", "size": 10}, {"id": "West Brompton", "label": "West Brompton", "shape": "dot", "size": 10}, {"id": "West Kensington", "label": "West Kensington", "shape": "dot", "size": 10}, {"id": "Fulham Broadway", "label": "Fulham Broadway", "shape": "dot", "size": 10}, {"id": "Parsons Green", "label": "Parsons Green", "shape": "dot", "size": 10}, {"id": "Putney Bridge", "label": "Putney Bridge", "shape": "dot", "size": 10}, {"id": "East Putney", "label": "East Putney", "shape": "dot", "size": 10}, {"id": "Southfields", "label": "Southfields", "shape": "dot", "size": 10}, {"id": "Wimbledon Park", "label": "Wimbledon Park", "shape": "dot", "size": 10}, {"id": "Wimbledon", "label": "Wimbledon", "shape": "dot", "size": 10}, {"id": "Hammersmith", "label": "Hammersmith", "shape": "dot", "size": 10}, {"id": "Ravenscourt Park", "label": "Ravenscourt Park", "shape": "dot", "size": 10}, {"id": "Stamford Brook", "label": "Stamford Brook", "shape": "dot", "size": 10}, {"id": "Turnham Green", "label": "Turnham Green", "shape": "dot", "size": 10}, {"id": "Chiswick Park", "label": "Chiswick Park", "shape": "dot", "size": 10}, {"id": "Gunnersbury", "label": "Gunnersbury", "shape": "dot", "size": 10}, {"id": "Acton Town", "label": "Acton Town", "shape": "dot", "size": 10}, {"id": "Ealing Common", "label": "Ealing Common", "shape": "dot", "size": 10}, {"id": "Ealing Broadway", "label": "Ealing Broadway", "shape": "dot", "size": 10}, {"id": "Kew Gardens", "label": "Kew Gardens", "shape": "dot", "size": 10}, {"id": "Richmond", "label": "Richmond", "shape": "dot", "size": 10}, {"id": "Mansion House", "label": "Mansion House", "shape": "dot", "size": 10}, {"id": "Canon Street", "label": "Canon Street", "shape": "dot", "size": 10}, {"id": "Monument", "label": "Monument", "shape": "dot", "size": 10}, {"id": "Tower Hill", "label": "Tower Hill", "shape": "dot", "size": 10}, {"id": "Aldgate East", "label": "Aldgate East", "shape": "dot", "size": 10}, {"id": "Whitechapel", "label": "Whitechapel", "shape": "dot", "size": 10}, {"id": "Oxford Circus", "label": "Oxford Circus", "shape": "dot", "size": 10}, {"id": "Picadilly Circus", "label": "Picadilly Circus", "shape": "dot", "size": 10}, {"id": "Hyde Park Corner", "label": "Hyde Park Corner", "shape": "dot", "size": 10}, {"id": "Bond Street", "label": "Bond Street", "shape": "dot", "size": 10}, {"id": "Vauxhall", "label": "Vauxhall", "shape": "dot", "size": 10}, {"id": "Stockwell", "label": "Stockwell", "shape": "dot", "size": 10}, {"id": "Brixton", "label": "Brixton", "shape": "dot", "size": 10}, {"id": "Warren Street", "label": "Warren Street", "shape": "dot", "size": 10}, {"id": "Baker Street", "label": "Baker Street", "shape": "dot", "size": 10}, {"id": "Holborn", "label": "Holborn", "shape": "dot", "size": 10}, {"id": "Euston", "label": "Euston", "shape": "dot", "size": 10}, {"id": "King\u0027s Cross St Pancras", "label": "King\u0027s Cross St Pancras", "shape": "dot", "size": 10}, {"id": "Highbury and Islington", "label": "Highbury and Islington", "shape": "dot", "size": 10}, {"id": "Russell Square", "label": "Russell Square", "shape": "dot", "size": 10}, {"id": "Finsbury Park", "label": "Finsbury Park", "shape": "dot", "size": 10}, {"id": "Seven Sisters", "label": "Seven Sisters", "shape": "dot", "size": 10}, {"id": "Tottenham Hale", "label": "Tottenham Hale", "shape": "dot", "size": 10}, {"id": "Blackhorse Road", "label": "Blackhorse Road", "shape": "dot", "size": 10}, {"id": "Walthamstow Central", "label": "Walthamstow Central", "shape": "dot", "size": 10}, {"id": "Leicester Square", "label": "Leicester Square", "shape": "dot", "size": 10}, {"id": "Covent Garden", "label": "Covent Garden", "shape": "dot", "size": 10}, {"id": "Chancery Lane", "label": "Chancery Lane", "shape": "dot", "size": 10}, {"id": "Lambeth North", "label": "Lambeth North", "shape": "dot", "size": 10}, {"id": "Southwark", "label": "Southwark", "shape": "dot", "size": 10}, {"id": "Elephant and Castle", "label": "Elephant and Castle", "shape": "dot", "size": 10}, {"id": "Lancaster Gate", "label": "Lancaster Gate", "shape": "dot", "size": 10}, {"id": "Marble Arch", "label": "Marble Arch", "shape": "dot", "size": 10}, {"id": "St Paul\u0027s", "label": "St Paul\u0027s", "shape": "dot", "size": 10}, {"id": "Bank", "label": "Bank", "shape": "dot", "size": 10}, {"id": "Moorgate", "label": "Moorgate", "shape": "dot", "size": 10}, {"id": "Liverpool Street", "label": "Liverpool Street", "shape": "dot", "size": 10}, {"id": "London Bridge", "label": "London Bridge", "shape": "dot", "size": 10}]);
+        edges = new vis.DataSet([{"color": "Green", "from": "Sloane Square", "to": "Victoria", "weight": 1}, {"color": "Green", "from": "Sloane Square", "to": "South Kensington", "weight": 1}, {"color": "Green", "from": "Victoria", "to": "St James\u0027s Park", "weight": 1}, {"color": "dodgerblue", "from": "Victoria", "to": "Green Park", "weight": 1}, {"color": "dodgerblue", "from": "Victoria", "to": "Pimlico", "weight": 1}, {"color": "Green", "from": "Westminster", "to": "Embankment", "weight": 1}, {"color": "Green", "from": "Westminster", "to": "St James\u0027s Park", "weight": 1}, {"color": "grey", "from": "Westminster", "to": "Green Park", "weight": 1}, {"color": "grey", "from": "Westminster", "to": "Waterloo", "weight": 1}, {"color": "Green", "from": "Embankment", "to": "Temple", "weight": 1}, {"color": "brown", "from": "Embankment", "to": "Charing Cross", "weight": 1}, {"color": "brown", "from": "Embankment", "to": "Waterloo", "weight": 1}, {"color": "Green", "from": "Temple", "to": "Blackfriars", "weight": 1}, {"color": "darkblue", "from": "South Kensington", "to": "Gloucester Road", "weight": 1}, {"color": "Green", "from": "South Kensington", "to": "Earl\u0027s Court", "weight": 1}, {"color": "darkblue", "from": "South Kensington", "to": "Knightsbridge", "weight": 1}, {"color": "Green", "from": "Gloucester Road", "to": "High Street Kensington", "weight": 1}, {"color": "Green", "from": "High Street Kensington", "to": "Notting Hill Gate", "weight": 1}, {"color": "Green", "from": "Notting Hill Gate", "to": "Bayswater", "weight": 1}, {"color": "red", "from": "Notting Hill Gate", "to": "Queensway", "weight": 1}, {"color": "Green", "from": "Bayswater", "to": "Edgware Road", "weight": 1}, {"color": "brown", "from": "Edgware Road", "to": "Marylebone", "weight": 1}, {"color": "brown", "from": "Edgware Road", "to": "Paddington", "weight": 1}, {"color": "Green", "from": "Earl\u0027s Court", "to": "West Brompton", "weight": 1}, {"color": "Green", "from": "Earl\u0027s Court", "to": "West Kensington", "weight": 1}, {"color": "Green", "from": "West Brompton", "to": "Fulham Broadway", "weight": 1}, {"color": "Green", "from": "Fulham Broadway", "to": "Parsons Green", "weight": 1}, {"color": "Green", "from": "Parsons Green", "to": "Putney Bridge", "weight": 1}, {"color": "Green", "from": "Putney Bridge", "to": "East Putney", "weight": 1}, {"color": "Green", "from": "East Putney", "to": "Southfields", "weight": 1}, {"color": "Green", "from": "Southfields", "to": "Wimbledon Park", "weight": 1}, {"color": "Green", "from": "Wimbledon Park", "to": "Wimbledon", "weight": 1}, {"color": "Green", "from": "West Kensington", "to": "Hammersmith", "weight": 1}, {"color": "Green", "from": "Hammersmith", "to": "Ravenscourt Park", "weight": 1}, {"color": "Green", "from": "Ravenscourt Park", "to": "Stamford Brook", "weight": 1}, {"color": "Green", "from": "Stamford Brook", "to": "Turnham Green", "weight": 1}, {"color": "Green", "from": "Turnham Green", "to": "Chiswick Park", "weight": 1}, {"color": "Green", "from": "Turnham Green", "to": "Gunnersbury", "weight": 1}, {"color": "Green", "from": "Chiswick Park", "to": "Acton Town", "weight": 1}, {"color": "Green", "from": "Acton Town", "to": "Ealing Common", "weight": 1}, {"color": "Green", "from": "Ealing Common", "to": "Ealing Broadway", "weight": 1}, {"color": "Green", "from": "Gunnersbury", "to": "Kew Gardens", "weight": 1}, {"color": "Green", "from": "Kew Gardens", "to": "Richmond", "weight": 1}, {"color": "Green", "from": "Blackfriars", "to": "Mansion House", "weight": 1}, {"color": "Green", "from": "Mansion House", "to": "Canon Street", "weight": 1}, {"color": "Green", "from": "Canon Street", "to": "Monument", "weight": 1}, {"color": "Green", "from": "Monument", "to": "Tower Hill", "weight": 1}, {"color": "Green", "from": "Tower Hill", "to": "Aldgate East", "weight": 1}, {"color": "Green", "from": "Aldgate East", "to": "Whitechapel", "weight": 1}, {"color": "dodgerblue", "from": "Green Park", "to": "Oxford Circus", "weight": 1}, {"color": "darkblue", "from": "Green Park", "to": "Picadilly Circus", "weight": 1}, {"color": "darkblue", "from": "Green Park", "to": "Hyde Park Corner", "weight": 1}, {"color": "grey", "from": "Green Park", "to": "Bond Street", "weight": 1}, {"color": "dodgerblue", "from": "Pimlico", "to": "Vauxhall", "weight": 1}, {"color": "dodgerblue", "from": "Vauxhall", "to": "Stockwell", "weight": 1}, {"color": "dodgerblue", "from": "Stockwell", "to": "Brixton", "weight": 1}, {"color": "dodgerblue", "from": "Oxford Circus", "to": "Warren Street", "weight": 1}, {"color": "brown", "from": "Oxford Circus", "to": "Picadilly Circus", "weight": 1}, {"color": "brown", "from": "Oxford Circus", "to": "Baker Street", "weight": 1}, {"color": "red", "from": "Oxford Circus", "to": "Bond Street", "weight": 1}, {"color": "red", "from": "Oxford Circus", "to": "Holborn", "weight": 1}, {"color": "dodgerblue", "from": "Warren Street", "to": "Euston", "weight": 1}, {"color": "dodgerblue", "from": "Euston", "to": "King\u0027s Cross St Pancras", "weight": 1}, {"color": "dodgerblue", "from": "King\u0027s Cross St Pancras", "to": "Highbury and Islington", "weight": 1}, {"color": "darkblue", "from": "King\u0027s Cross St Pancras", "to": "Russell Square", "weight": 1}, {"color": "dodgerblue", "from": "Highbury and Islington", "to": "Finsbury Park", "weight": 1}, {"color": "dodgerblue", "from": "Finsbury Park", "to": "Seven Sisters", "weight": 1}, {"color": "dodgerblue", "from": "Seven Sisters", "to": "Tottenham Hale", "weight": 1}, {"color": "dodgerblue", "from": "Tottenham Hale", "to": "Blackhorse Road", "weight": 1}, {"color": "dodgerblue", "from": "Blackhorse Road", "to": "Walthamstow Central", "weight": 1}, {"color": "darkblue", "from": "Picadilly Circus", "to": "Leicester Square", "weight": 1}, {"color": "brown", "from": "Picadilly Circus", "to": "Charing Cross", "weight": 1}, {"color": "darkblue", "from": "Hyde Park Corner", "to": "Knightsbridge", "weight": 1}, {"color": "darkblue", "from": "Leicester Square", "to": "Covent Garden", "weight": 1}, {"color": "darkblue", "from": "Covent Garden", "to": "Holborn", "weight": 1}, {"color": "darkblue", "from": "Holborn", "to": "Russell Square", "weight": 1}, {"color": "red", "from": "Holborn", "to": "Chancery Lane", "weight": 1}, {"color": "brown", "from": "Waterloo", "to": "Lambeth North", "weight": 1}, {"color": "grey", "from": "Waterloo", "to": "Southwark", "weight": 1}, {"color": "brown", "from": "Lambeth North", "to": "Elephant and Castle", "weight": 1}, {"color": "brown", "from": "Baker Street", "to": "Marylebone", "weight": 1}, {"color": "grey", "from": "Baker Street", "to": "Bond Street", "weight": 1}, {"color": "red", "from": "Queensway", "to": "Lancaster Gate", "weight": 1}, {"color": "red", "from": "Lancaster Gate", "to": "Marble Arch", "weight": 1}, {"color": "red", "from": "Marble Arch", "to": "Bond Street", "weight": 1}, {"color": "red", "from": "Chancery Lane", "to": "St Paul\u0027s", "weight": 1}, {"color": "red", "from": "St Paul\u0027s", "to": "Bank", "weight": 1}, {"color": "red", "from": "Bank", "to": "Moorgate", "weight": 1}, {"color": "red", "from": "Moorgate", "to": "Liverpool Street", "weight": 1}, {"color": "grey", "from": "Southwark", "to": "London Bridge", "weight": 1}]);
+
+        // adding nodes and edges to the graph
+        data = {nodes: nodes, edges: edges};
+
+        var options = {
+    "configure": {
+        "enabled": true
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": false,
+            "type": "continuous"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+        
+        
+
+        
+        // if this network requires displaying the configure window,
+        // put it in its div
+        options.configure["container"] = document.getElementById("config");
+        
+
+        network = new vis.Network(container, data, options);
+	 
+        
+
+
+        
+
+        return network;
+
+    }
+
+    drawGraph();
+
+</script>
+</body>
+</html>
